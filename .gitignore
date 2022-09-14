@@ -6,3 +6,5 @@ dist/
 coverage/
 .vscode/*
 !.vscode/launch.json
+
+mock.json
