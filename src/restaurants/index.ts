@@ -9,6 +9,7 @@ import { toContainerValues } from '@/_lib/di/containerAdapters';
 import { makeRestaurantController } from './interface/http/restaurantsController';
 import { makeMongoFindRestaurants } from './infrastructure/MongoFindRestaurants';
 import { FindRestaurants } from './application/query/FindRestaurants';
+import { FetchRestaurant, makeFetchRestaurant } from './application/useCases/FetchRestaurant';
 
 const restaurantModule = makeModule('restaurant', async ({ container: { register }, initialize }) => {
   const [collections] = await initialize(
@@ -22,6 +23,7 @@ const restaurantModule = makeModule('restaurant', async ({ container: { register
     restaurantRepository: asFunction(makeMongoRestaurantRepository),
     createRestaurant: asFunction(makeCreateRestaurant),
     findRestaurants: asFunction(makeMongoFindRestaurants),
+    fetchRestaurant: asFunction(makeFetchRestaurant)
   });
 
   await initialize(makeRestaurantController);
@@ -31,7 +33,8 @@ type RestaurantRegistry = {
   restaurantCollection: RestaurantCollection;
   restaurantRepository: RestaurantRepository;
   createRestaurant: CreateRestaurant;
-  findRestaurants: FindRestaurants
+  findRestaurants: FindRestaurants;
+  fetchRestaurant: FetchRestaurant
 };
 
 export { restaurantModule };
