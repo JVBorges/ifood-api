@@ -20,7 +20,7 @@ type RestaurantCollection = Collection<RestaurantSchema>;
 const initRestaurantCollection = async (db: Db): Promise<RestaurantCollection> => {
   const collection: RestaurantCollection = db.collection('restaurant');
 
-  await collection.createIndex({ title: 1 }, { unique: true });
+  await collection.createIndex({ name: 1 }, { unique: true });
   await collection.createIndex({ _id: 1, version: 1 });
   await collection.createIndex({ _id: 1, deleted: 1 });
 

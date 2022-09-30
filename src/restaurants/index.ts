@@ -10,6 +10,8 @@ import { makeRestaurantController } from './interface/http/restaurantsController
 import { makeMongoFindRestaurants } from './infrastructure/MongoFindRestaurants';
 import { FindRestaurants } from './application/query/FindRestaurants';
 import { FetchRestaurant, makeFetchRestaurant } from './application/useCases/FetchRestaurant';
+import { FindRestaurantProducts } from './application/query/FindRestaurantProducts';
+import { makeMongoFindRestaurantProducts } from './infrastructure/MongoFindRestaurantProducts';
 
 const restaurantModule = makeModule('restaurant', async ({ container: { register }, initialize }) => {
   const [collections] = await initialize(
@@ -23,7 +25,8 @@ const restaurantModule = makeModule('restaurant', async ({ container: { register
     restaurantRepository: asFunction(makeMongoRestaurantRepository),
     createRestaurant: asFunction(makeCreateRestaurant),
     findRestaurants: asFunction(makeMongoFindRestaurants),
-    fetchRestaurant: asFunction(makeFetchRestaurant)
+    fetchRestaurant: asFunction(makeFetchRestaurant),
+    findRestaurantProducts: asFunction(makeMongoFindRestaurantProducts)
   });
 
   await initialize(makeRestaurantController);
@@ -34,7 +37,8 @@ type RestaurantRegistry = {
   restaurantRepository: RestaurantRepository;
   createRestaurant: CreateRestaurant;
   findRestaurants: FindRestaurants;
-  fetchRestaurant: FetchRestaurant
+  fetchRestaurant: FetchRestaurant;
+  findRestaurantProducts: FindRestaurantProducts
 };
 
 export { restaurantModule };
