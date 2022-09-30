@@ -8,7 +8,7 @@ type RestaurantSchema = {
   description?: string;
   address: Restaurant.Address;
   hours: Restaurant.Hour[];
-  menu: Restaurant.Menu;
+  menu: Menu.Type;
   createdAt: Date;
   updatedAt: Date;
   version: number;
