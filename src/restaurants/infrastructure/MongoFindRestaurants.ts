@@ -15,7 +15,7 @@ const makeMongoFindRestaurants =
     if (filter.name) {
       match = {
         ...match,
-        title: { $regex: `^${filter.name}`, $options: 'i' },
+        name: { $regex: `^${filter.name}`, $options: 'i' },
       };
     }
     
@@ -32,22 +32,7 @@ const makeMongoFindRestaurants =
         },
         ...(sort?.length
           ? [{ $sort: sort.reduce((acc, { field, direction }) => ({ [field]: direction === 'asc' ? 1 : -1 }), {}) }]
-          : []),
-        {
-          $lookup: {
-            from: 'comment',
-            as: 'comments',
-            let: { articleId: '$_id' },
-            pipeline: [
-              {
-                $match: {
-                  deleted: false,
-                  $expr: { $eq: ['$articleId', '$$articleId'] },
-                },
-              },
-            ],
-          },
-        },
+          : [])
       ])
       .toArray();
 

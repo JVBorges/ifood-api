@@ -8,9 +8,7 @@ type Dependencies = {
 }
 
 const { getFilter, getPagination, getSorter } = makePaginator({
-  // filter: Joi.object({
-  //   name: Joi.string().optional()
-  // })
+  filter: Joi.string().optional()
 });
 
 const findRestaurantsHandler = handler(({ findRestaurants }: Dependencies) => async (req, res) => {
@@ -19,7 +17,7 @@ const findRestaurantsHandler = handler(({ findRestaurants }: Dependencies) => as
   const sort = getSorter(req);
 
   const restaurants = await findRestaurants({
-    filter,
+    filter: { name: filter },
     sort,
     pagination,
   });
